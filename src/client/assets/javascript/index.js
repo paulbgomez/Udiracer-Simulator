@@ -78,19 +78,31 @@ async function delay(ms) {
 async function handleCreateRace() {
 	// render starting UI
 	renderAt('#race', renderRaceStartView())
-
+	try {
 	// TODO - Get player_id and track_id from the store
-	
-	// const race = TODO - invoke the API call to create the race, then save the result
+		const chosenPlayer = store.player_id;
+		const chosenTrack = store.track_id;
+			if (!chosenPlayer) {
+				alert('You can´t compete without a driver!');
+			} else if (!chosenTrack) {
+				alert('Don´t forget to choose a car!')
+			} else {
+			// const race = TODO - invoke the API call to create the race, then save the result
+			const race = await createRace(chosenPlayer, chosenTrack);
+			console.log(race);
+			// TODO - update the store with the race id
+			store.race_id = race.ID - 1; 
+			// The race has been created, now start the countdown
+			// TODO - call the async function runCountdown
 
-	// TODO - update the store with the race id
+			// TODO - call the async function startRace
 
-	// The race has been created, now start the countdown
-	// TODO - call the async function runCountdown
+			// TODO - call the async function runRace
+			}
+	} catch (error) {
+		
+	}
 
-	// TODO - call the async function startRace
-
-	// TODO - call the async function runRace
 }
 
 function runRace(raceID) {
@@ -166,8 +178,9 @@ function handleSelectTrack(target) {
 }
 
 function handleAccelerate() {
-	console.log("accelerate button clicked")
+	console.log("accelerate button clicked");
 	// TODO - Invoke the API call to accelerate
+	accelerate();
 }
 
 // HTML VIEWS ------------------------------------------------
