@@ -1,5 +1,7 @@
 // PROVIDED CODE BELOW (LINES 1 - 80) DO NOT REMOVE
 
+const { response } = require("express")
+
 // The store will hold all information needed globally
 var store = {
 	track_id: undefined,
@@ -319,44 +321,73 @@ function defaultFetchOpts() {
 
 // TODO - Make a fetch call (with error handling!) to each of the following API endpoints 
 
-function getTracks() {
+async function getTracks() {
 	// GET request to `${SERVER}/api/tracks`
+	try {
+		const response = await fetch(`${SERVER}/api/tracks`)
+		const response_1 = await response.json()
+		return console.log(response_1)
+	} catch (error) {
+		return console.log(error)
+	}
 }
 
 function getRacers() {
 	// GET request to `${SERVER}/api/cars`
+	fetch(`${SERVER}/api/cars`)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(error => console.log(error))
 }
 
-function createRace(player_id, track_id) {
+async function createRace(player_id, track_id) {
 	player_id = parseInt(player_id)
 	track_id = parseInt(track_id)
 	const body = { player_id, track_id }
 	
-	return fetch(`${SERVER}/api/races`, {
-		method: 'POST',
-		...defaultFetchOpts(),
-		dataType: 'jsonp',
-		body: JSON.stringify(body)
-	})
-	.then(res => res.json())
-	.catch(err => console.log("Problem with createRace request::", err))
+	try {
+		const res = await fetch(`${SERVER}/api/races`, {
+			method: 'POST',
+			...defaultFetchOpts(),
+			dataType: 'jsonp',
+			body: JSON.stringify(body)
+		})
+		return await res.json()
+	} catch (err) {
+		return console.log("Problem with createRace request::", err)
+	}
 }
 
 function getRace(id) {
 	// GET request to `${SERVER}/api/races/${id}`
+	fetch(`${SERVER}/api/races/${id}`)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(error => console.log(error))
 }
 
-function startRace(id) {
-	return fetch(`${SERVER}/api/races/${id}/start`, {
-		method: 'POST',
-		...defaultFetchOpts(),
-	})
-	.then(res => res.json())
-	.catch(err => console.log("Problem with getRace request::", err))
+async function startRace(id) {
+	try {
+		const res = await fetch(`${SERVER}/api/races/${id}/start`, {
+			method: 'POST',
+			...defaultFetchOpts(),
+		})
+		return await res.json()
+	} catch (err) {
+		return console.log("Problem with getRace request::", err)
+	}
 }
 
 function accelerate(id) {
 	// POST request to `${SERVER}/api/races/${id}/accelerate`
 	// options parameter provided as defaultFetchOpts
 	// no body or datatype needed for this request
+	fetch(`${SERVER}/api/races/${id}/accelerate`,{
+		method: 'POST',
+		...defaultFetchOpts()
+	})
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(error => console.log(error))
+
 }
