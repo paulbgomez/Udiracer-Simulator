@@ -1,7 +1,5 @@
 // PROVIDED CODE BELOW (LINES 1 - 80) DO NOT REMOVE
 
-const { response } = require("express")
-
 // The store will hold all information needed globally
 var store = {
 	track_id: undefined,
@@ -77,7 +75,6 @@ async function delay(ms) {
 // This async function controls the flow of the race, add the logic and error handling
 async function handleCreateRace() {
 	// render starting UI
-	renderAt('#race', renderRaceStartView())
 	try {
 	// TODO - Get player_id and track_id from the store
 		const chosenPlayer = store.player_id;
@@ -89,18 +86,20 @@ async function handleCreateRace() {
 			} else {
 			// const race = TODO - invoke the API call to create the race, then save the result
 			const race = await createRace(chosenPlayer, chosenTrack);
+			renderAt('#race', renderRaceStartView(race.Track, race.Cars))
 			console.log(race);
 			// TODO - update the store with the race id
-			store.race_id = race.ID - 1; 
+			store.race_id = (race.ID - 1); 
 			// The race has been created, now start the countdown
 			// TODO - call the async function runCountdown
-
+			await runCountdown();
 			// TODO - call the async function startRace
-
+			await startRace(store.race_id);
 			// TODO - call the async function runRace
+			await runRace(store.race_id);
 			}
 	} catch (error) {
-		
+		console.log('Error in handleCreateRace() ::', error);
 	}
 
 }
@@ -184,6 +183,21 @@ function handleAccelerate() {
 }
 
 // HTML VIEWS ------------------------------------------------
+
+const customRacerName = {
+    "Racer 1": "RACER NAME 1",
+    "Racer 2": "RACER NAME 2",
+    "Racer 3": "RACER NAME 3",
+    "Racer 4": "RACER NAME 4",
+    "Racer 5": "RACER NAME 5",
+}
+const customTrackName = {
+    "Track 1": "TRACK NAME 1",
+    "Track 2": "TRACK NAME 2",
+    "Track 3": "TRACK NAME 3",
+    "Track 4": "TRACK NAME 4",
+    "Track 5": "TRACK NAME 5",
+}
 // Provided code - do not remove
 
 function renderRacerCars(racers) {
@@ -197,7 +211,7 @@ function renderRacerCars(racers) {
 
 	return `
 		<ul id="racers">
-			${reuslts}
+			${results}
 		</ul>
 	`
 }
@@ -207,7 +221,7 @@ function renderRacerCard(racer) {
 
 	return `
 		<li class="card podracer" id="${id}">
-			<h3>${driver_name}</h3>
+			<h3>${customRacerName[driver_name]}</h3>
 			<p>${top_speed}</p>
 			<p>${acceleration}</p>
 			<p>${handling}</p>
@@ -236,7 +250,7 @@ function renderTrackCard(track) {
 
 	return `
 		<li id="${id}" class="card track">
-			<h3>${name}</h3>
+			<h3>${customTrackName[name]}</h3>
 		</li>
 	`
 }
@@ -387,7 +401,7 @@ async function startRace(id) {
 		})
 		return await res.json()
 	} catch (err) {
-		return console.log("Problem with getRace request::", err)
+		return console.log("Problem with startRace request::", err)
 	}
 }
 
