@@ -98,7 +98,6 @@ async function handleCreateRace() {
 			// The race has been created, now start the countdown
 			// TODO - call the async function runCountdown
 			await runCountdown();
-			console.log(store.race_id);
 			// TODO - call the async function startRace
 			await startRace(store.race_id);
 			// TODO - call the async function runRace
@@ -161,7 +160,6 @@ async function runCountdown() {
 }
 
 function handleSelectPodRacer(target) {
-	console.log("selected a pod", target.id)
 
 	// remove class selected from all racer options
 	const selected = document.querySelector('#racers .selected')
@@ -177,7 +175,6 @@ function handleSelectPodRacer(target) {
 }
 
 function handleSelectTrack(target) {
-	console.log("selected a track", target.id)
 
 	// remove class selected from all track options
 	const selected = document.querySelector('#tracks .selected')
@@ -194,7 +191,6 @@ function handleSelectTrack(target) {
 
 async function handleAccelerate() {
 	try {
-		console.log("accelerate button clicked");
 		// TODO - Invoke the API call to accelerate
 		accelerate(store.race_id);
 	} catch (error) {
@@ -239,12 +235,14 @@ function renderRacerCars(racers) {
 function renderRacerCard(racer) {
 	const { id, driver_name, top_speed, acceleration, handling } = racer
 	return `
-		<li class="list-group-item pod" id="${id}">
-			<h3>${customRacerName[driver_name]}</h3>
-			<p>Top Speed: ${top_speed}</p>
-			<p>Acceleration: ${acceleration}</p>
-			<p>Handling: ${handling}</p>
-		</li>
+		<div class="col-sm racer" id="${id}">
+			<li class="list-group-item pod">
+				<h3>${customRacerName[driver_name]}</h3>
+				<p>Top Speed: ${top_speed}</p>
+				<p>Acceleration: ${acceleration}</p>
+				<p>Handling: ${handling}</p>
+			</li>
+		</div>
 	`
 }
 
@@ -266,11 +264,13 @@ function renderTrackCard(track) {
 	const { id, name } = track
 
 	return `
-		<li id="${id}" class="list-group-item track">
-			<h3 id="button-track-${id}">${customTrackName[name]}
-				<img class="button_image" src="../assets/images/car${id}.gif"/>
-			</h3>
-		</li>
+		<div class="col-sm track" id="${id}">
+			<li class="list-group-item track">
+				<h3 id="button-track-${id}">${customTrackName[name]}
+					<img class="button_image" src="../assets/images/car${id}.gif"/>
+				</h3>
+			</li>
+		</div>
 	`
 }
 
@@ -321,7 +321,6 @@ function raceProgress(positions) {
 	//let userPlayer = positions.find(e => e.id === parseInt(store.player_id))
 
 	const raceTracks = positions.map(r => {
-		console.log(r.id);
 	//there are 201 segments in the race and I have kept track length as 25vh
 	const completion = r.segment/201; 
 	const completePercentage = completion * 100;
