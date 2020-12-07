@@ -36,20 +36,20 @@ function setupClickHandlers() {
 		// event.stopPropagation();
 		let parent = event.target.parentElement
 		const { target } = event;
-		if(parent.matches('.card.track')){
+		if(parent.matches('.list-group-item.track')){
 			handleSelectTrack(parent);
 		}
 		
-		if(parent.matches('.card.podracer')){
+		if(parent.matches('.list-group-item.pod')){
 			handleSelectPodRacer(parent);
 		}
 		
 		// Race track form field
-		if (target.matches('.card.track')) {
+		if (target.matches('.list-group-item.track')) {
 			handleSelectTrack(target);
 		}
 		// Podracer form field
-		if (target.matches('.card.podracer')) {
+		if (target.matches('.list-group-item.pod')) {
 			event.stopPropagation();
 			handleSelectPodRacer(target)
 		}
@@ -240,7 +240,7 @@ function renderRacerCars(racers) {
 function renderRacerCard(racer) {
 	const { id, driver_name, top_speed, acceleration, handling } = racer
 	return `
-		<li class="card podracer" id="${id}">
+		<li class="list-group-item pod" id="${id}">
 			<h3>${customRacerName[driver_name]}</h3>
 			<p>Top Speed: ${top_speed}</p>
 			<p>Acceleration: ${acceleration}</p>
@@ -269,11 +269,10 @@ function renderTrackCard(track) {
 	const { id, name } = track
 
 	return `
-		<li id="${id}" class="card track">
+		<li id="${id}" class="list-group-item track">
 			<h3 id="button-track-${id}">${customTrackName[name]}
 				<img class="button_image" src="../assets/images/car${id}.gif"/>
 			</h3>
-			
 		</li>
 	`
 }
@@ -296,9 +295,9 @@ function renderRaceStartView(track, racers) {
 			</section>
 
 			<section id="accelerate">
-				<h2>Directions</h2>
-				<p>Click the button as fast as you can to go faster!</p>
-				<button id="gas-peddle">Click Me To Win!</button>
+				<h2 "text-center font-weight-bold">Directions</h2>
+				<p "text-center font-weight-bold">Click the button as fast as you can to go faster!</p>
+				<button type="button" class="btn btn-success btn-lg btn-block" id="gas-peddle" id="gas-peddle">Click Me To Win!</button>
 			</section>
 		</main>
 		<footer></footer>
@@ -330,14 +329,18 @@ function raceProgress(positions) {
 	const completion = r.segment/201; 
 	const completePercentage = completion * 100;
 	return `
+	<div class="col-sm d-flex justify-content-around">
 	<div class="racetrack">
-	  <div class="race-car" style="bottom:${completion*25}vh">
+	  <div class="race-car">
 	  	<img class="progressImage" src="../assets/images/car${r.id}.gif"/>
 	  </div>
 	  <div class="racer-name">
 		<div>${customRacerName[r.driver_name]}</div>
-		<div>${Math.round(completePercentage)}%</div>
+		<div class="progress">
+  			<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${completion*25}vh" aria-valuemin="0" aria-valuemax="100">${Math.round(completePercentage)}%</div>
+		</div>
 	  </div>
+	</div>
 	</div>
 	`
 	}).join('');
@@ -363,7 +366,12 @@ function raceProgress(positions) {
 		  ${results}
 		</div>
 		<div class="progress-racetracks">
-		  ${raceTracks}
+			<div class="container">
+				<div class="row">
+					${raceTracks}
+				</div>
+			</div>
+		</div>
 		</div>
 	  </section>
 	</main>
