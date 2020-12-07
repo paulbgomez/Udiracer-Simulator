@@ -32,6 +32,28 @@ section#accelerate button {
     cursor: pointer;
 }
 
+.racetrack {
+    position: relative;
+    border: 2px green;
+    border-style: none solid;
+    width: 45px;
+    height: 110px;
+  }
+
+  .race-car {
+    position: absolute;
+    height: 50px;
+    width: 40px;
+    background-size: cover;
+  }
+  
+  .racer-name {
+    position: absolute;
+    top: 50px;
+    font-size: 1.75rem;
+    text-align: center;
+  }
+
 #big-numbers {
     font-weight: bolder;
     font-size: 70px;

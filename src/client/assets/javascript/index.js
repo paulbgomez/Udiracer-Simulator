@@ -318,18 +318,22 @@ function resultsView(positions) {
 
 function raceProgress(positions) {
 
-	const racers = positions.map(p => p.driver_name);
-	let userPlayer = positions.find(e => e.id === store.player_id);
-	  
-	const raceTracks = racers.map((r) => {
+	//const racers = positions.map(p => p.driver_name);
+	//let userPlayer = positions.find(e => e.id === parseInt(store.player_id))
+
+	const raceTracks = positions.map(r => {
+		console.log(r.id);
 	//there are 201 segments in the race and I have kept track length as 25vh
-	const completion = userPlayer.segment/201; 
+	const completion = r.segment/201; 
+	const completePercentage = completion * 100;
 	return `
 	<div class="racetrack">
-	  <div class="race-car" style="bottom:${completion*25}vh"></div>
+	  <div class="race-car" style="bottom:${completion*25}vh">
+		<img url="../images/car${r.id}.gif" />
+	  </div>
 	  <div class="racer-name">
-		<div>${r}</div>
-		<div>${Math.round(completion*100)}%</div>
+		<div>${customRacerName[r.driver_name]}</div>
+		<div>${Math.round(completePercentage)}%</div>
 	  </div>
 	</div>
 	`
@@ -339,7 +343,6 @@ function raceProgress(positions) {
 	let count = 1
 	
 	const results = positions.map(p => {
-		console.log(p.driver_name);
 		return `
 			<tr>
 				<td>
