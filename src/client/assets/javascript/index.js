@@ -93,7 +93,6 @@ async function handleCreateRace() {
 			// const race = TODO - invoke the API call to create the race, then save the result
 			const race = await createRace(player_id, track_id);
 			renderAt('#race', renderRaceStartView(race.Track, race.Cars))
-			console.log(race);
 			// TODO - update the store with the race id
 			store.race_id = (race.ID - 1); 
 			// The race has been created, now start the countdown
@@ -318,26 +317,29 @@ function resultsView(positions) {
 }
 
 function raceProgress(positions) {
-	let userPlayer = positions.find(e => e.id === store.player_id)
-	userPlayer.driver_name += " (you)"
+
+	const racers = positions.map(p => p.driver_name);
+	let userPlayer = positions.find(e => e.id === store.player_id);
+	  
+	const raceTracks = racers.map((r) => {
+	//there are 201 segments in the race and I have kept track length as 25vh
+	const completion = userPlayer.segment/201; 
+	return `
+	<div class="racetrack">
+	  <div class="race-car" style="bottom:${completion*25}vh"></div>
+	  <div class="racer-name">
+		<div>${r}</div>
+		<div>${Math.round(completion*100)}%</div>
+	  </div>
+	</div>
+	`
+	}).join('');
 
 	positions = positions.sort((a, b) => (a.segment > b.segment) ? -1 : 1)
 	let count = 1
-
-	/*
-	const raceTracks = positions.map(player => {
-		const completion = player.segment/201; 
-		const completionPercentage = completion*100;
-		return `
-			<div>
-				<div style="bottom:${completionPercentage}%"></div>
-			</div>
-		`
-	});
-*/
-
-
+	
 	const results = positions.map(p => {
+		console.log(p.driver_name);
 		return `
 			<tr>
 				<td>
@@ -345,17 +347,23 @@ function raceProgress(positions) {
 				</td>
 			</tr>
 		`
-	})
+	});
+
 
 	return `
-		<main>
-			<h3>Leaderboard</h3>
-			<section id="leaderBoard">
-				${results}
-			</section>
-		</main>
-	`
+	<main>
+	  <section id="leaderBoard" class="leaderboard">
+		<div class="progress-section">
+		  ${results}
+		</div>
+		<div class="progress-racetracks">
+		  ${raceTracks}
+		</div>
+	  </section>
+	</main>
+  `
 }
+
 
 function renderAt(element, html) {
 	const node = document.querySelector(element)
