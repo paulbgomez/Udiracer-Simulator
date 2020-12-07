@@ -28,7 +28,7 @@ header {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
+  height: 30vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,7 +99,7 @@ footer {
 /* -------------------  TABLET  --------------------- */
 @media (min-width: 768px) {
   header {
-    height: 100vh;
+    height: 30vh;
   }
 }
 
