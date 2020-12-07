@@ -35,7 +35,6 @@ section#accelerate button {
 .racetrack {
     position: relative;
     border: 2px green;
-    border-style: none solid;
     width: 45px;
     height: 110px;
   }

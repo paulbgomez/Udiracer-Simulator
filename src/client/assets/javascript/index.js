@@ -270,7 +270,10 @@ function renderTrackCard(track) {
 
 	return `
 		<li id="${id}" class="card track">
-			<h3 id="button-track-${id}">${customTrackName[name]}</h3>
+			<h3 id="button-track-${id}">${customTrackName[name]}
+				<img class="button_image" src="../assets/images/car${id}.gif"/>
+			</h3>
+			
 		</li>
 	`
 }
@@ -294,7 +297,7 @@ function renderRaceStartView(track, racers) {
 
 			<section id="accelerate">
 				<h2>Directions</h2>
-				<p>Click the button as fast as you can to make ${customRacerName[racers.name]} go faster!</p>
+				<p>Click the button as fast as you can to go faster!</p>
 				<button id="gas-peddle">Click Me To Win!</button>
 			</section>
 		</main>
@@ -329,7 +332,7 @@ function raceProgress(positions) {
 	return `
 	<div class="racetrack">
 	  <div class="race-car" style="bottom:${completion*25}vh">
-		<img url="../images/car${r.id}.gif" />
+	  	<img class="progressImage" src="../assets/images/car${r.id}.gif"/>
 	  </div>
 	  <div class="racer-name">
 		<div>${customRacerName[r.driver_name]}</div>

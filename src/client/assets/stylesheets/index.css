@@ -55,49 +55,6 @@ h3 {
   font-size: 25px;
 }
 
-#button-track-1{
-  background-image: url(../images/car1.gif);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: fit-content;
-}
-#button-track-2{
-  background-image: url(../images/car2.gif);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: fit-content;
-}
-#button-track-3{
-  background-image: url(../images/car3.gif);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: fit-content;
-}
-#button-track-4{
-  background-image: url(../images/car4.gif);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: fit-content;
-}
-#button-track-5{
-  background-image: url(../images/car5.gif);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: fit-content;
-}
-#button-track-6{
-  background-image: url(../images/car6.gif);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: fit-content;
-}
-
 
 h4 {
   color: #545454;
