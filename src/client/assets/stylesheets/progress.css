@@ -4,6 +4,12 @@
     font-family: 'Nanum Brush Script', cursive;
   }
 
+.race-car{
+  min-height: 250px;
+  display: flex;
+  align-items: flex-end;
+}
+
 /* -------------------  MOBILE  --------------------- */
 header {
     background-image: url(../images/wacky_races_by_classicgamer84_dcp0zjx.png);

@@ -334,9 +334,8 @@ function raceProgress(positions) {
 	  <div class="racer-name">
 		<div>${customRacerName[r.driver_name]}</div>
 		<div class="progress">
-  			<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${completion*25}vh" aria-valuemin="0" aria-valuemax="100">${Math.round(completePercentage)}%</div>
-		</div>
-	  </div>
+			<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="${completePercentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${completePercentage}%"}>${Math.round(completePercentage)}%</div>		</div>
+	  	</div>
 	</div>
 	</div>
 	`
