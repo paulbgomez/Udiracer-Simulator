@@ -231,9 +231,8 @@ function renderRacerCars(racers) {
 	const results = racers.map(renderRacerCard).join('')
 
 	return `
-		<ul id="racers">
 			${results}
-		</ul>
+
 	`
 }
 
@@ -259,9 +258,7 @@ function renderTrackCards(tracks) {
 	const results = tracks.map(renderTrackCard).join('')
 
 	return `
-		<ul id="tracks">
 			${results}
-		</ul>
 	`
 }
 
@@ -279,10 +276,10 @@ function renderTrackCard(track) {
 
 function renderCountdown(count) {
 	return `
-		<h2>Race Starts In...</h2>
-		<p id="big-numbers">${count}</p>
-	`
-}
+		<h2 class="text-center font-weight-bold">Race Starts In...</h2>
+		<p class="text-center border border-warning rounded-pill" id="big-numbers">${count}</p>
+		`
+	}
 
 function renderRaceStartView(track, racers) {
 	return `
@@ -295,8 +292,8 @@ function renderRaceStartView(track, racers) {
 			</section>
 
 			<section id="accelerate">
-				<h2 "text-center font-weight-bold">Directions</h2>
-				<p "text-center font-weight-bold">Click the button as fast as you can to go faster!</p>
+				<h2 class="text-center font-weight-bold">Directions</h2>
+				<p class="text-center font-weight-bold">Click the button as fast as you can to go faster!</p>
 				<button type="button" class="btn btn-success btn-lg btn-block" id="gas-peddle" id="gas-peddle">Click Me To Win!</button>
 			</section>
 		</main>
