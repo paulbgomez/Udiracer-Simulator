@@ -32,32 +32,37 @@ async function onPageLoad() {
 }
 
 function setupClickHandlers() {
-	document.addEventListener('click', function(event) {
-		const { target } = event
-
+	document.addEventListener('click', function (event) {
+		// event.stopPropagation();
+		let parent = event.target.parentElement
+		const { target } = event;
+		if(parent.matches('.card.track')){
+			handleSelectTrack(parent);
+		}
+		
+		if(parent.matches('.card.podracer')){
+			handleSelectPodRacer(parent);
+		}
+		
 		// Race track form field
 		if (target.matches('.card.track')) {
-			handleSelectTrack(target)
+			handleSelectTrack(target);
 		}
-
 		// Podracer form field
 		if (target.matches('.card.podracer')) {
+			event.stopPropagation();
 			handleSelectPodRacer(target)
 		}
-
 		// Submit create race form
 		if (target.matches('#submit-create-race')) {
-			event.preventDefault()
-	
+			event.preventDefault();
 			// start race
-			handleCreateRace()
+			handleCreateRace();
 		}
-
 		// Handle acceleration click
 		if (target.matches('#gas-peddle')) {
 			handleAccelerate(target)
 		}
-
 	}, false)
 }
 
@@ -235,7 +240,6 @@ function renderRacerCars(racers) {
 
 function renderRacerCard(racer) {
 	const { id, driver_name, top_speed, acceleration, handling } = racer
-	console.log(driver_name); //not working properly
 	return `
 		<li class="card podracer" id="${id}">
 			<h3>${customRacerName[driver_name]}</h3>
@@ -267,7 +271,7 @@ function renderTrackCard(track) {
 
 	return `
 		<li id="${id}" class="card track">
-			<h3>${customTrackName[name]}</h3>
+			<h3 id="button-track-${id}">${customTrackName[name]}</h3>
 		</li>
 	`
 }

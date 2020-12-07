@@ -2,7 +2,9 @@
 
 /* -------------------  MOBILE  --------------------- */
 
-
+* {
+    font-family: 'Nanum Brush Script', cursive;
+  }
 /* -------------------  TABLET  --------------------- */
 @media (min-width: 768px) {
 

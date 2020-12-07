@@ -1,3 +1,7 @@
+* {
+    font-family: 'Nanum Brush Script', cursive;
+  }
+
 form ul {
     display: flex;
     padding: 20px;
