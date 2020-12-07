@@ -1,6 +1,6 @@
 // PROVIDED CODE BELOW (LINES 1 - 80) DO NOT REMOVE
 // The store will hold all information needed globally
-var store = {
+let store = {
 	track_id: undefined,
 	player_id: undefined,
 	race_id: undefined,
@@ -235,14 +235,12 @@ function renderRacerCars(racers) {
 function renderRacerCard(racer) {
 	const { id, driver_name, top_speed, acceleration, handling } = racer
 	return `
-		<div class="col-sm racer" id="${id}">
-			<li class="list-group-item pod">
-				<h3>${customRacerName[driver_name]}</h3>
-				<p>Top Speed: ${top_speed}</p>
-				<p>Acceleration: ${acceleration}</p>
-				<p>Handling: ${handling}</p>
-			</li>
-		</div>
+	<li class="list-group-item pod" id="${id}">
+	<h3>${customRacerName[driver_name]}</h3>
+	<p>Top Speed: ${top_speed}</p>
+	<p>Acceleration: ${acceleration}</p>
+	<p>Handling: ${handling}</p>
+</li>
 	`
 }
 
@@ -264,13 +262,11 @@ function renderTrackCard(track) {
 	const { id, name } = track
 
 	return `
-		<div class="col-sm track" id="${id}">
-			<li class="list-group-item track">
+			<li id="${id}" class="list-group-item track">
 				<h3 id="button-track-${id}">${customTrackName[name]}
 					<img class="button_image" src="../assets/images/car${id}.gif"/>
 				</h3>
 			</li>
-		</div>
 	`
 }
 
@@ -293,7 +289,7 @@ function renderRaceStartView(track, racers) {
 
 			<section id="accelerate">
 				<h2 class="text-center font-weight-bold">Directions</h2>
-				<p class="text-center font-weight-bold">Click the button as fast as you can to go faster!</p>
+				<p class="text-center font-weight-bold">Click the button as fast as you can to make ${customRacerName[racers]} faster!</p>
 				<button type="button" class="btn btn-success btn-lg btn-block" id="gas-peddle" id="gas-peddle">Click Me To Win!</button>
 			</section>
 		</main>
