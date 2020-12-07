@@ -131,7 +131,7 @@ async function runRace(raceID) {
 						resolve(res) // resolve the promise
 					}
 				})
-				.catch(error => console.log('Error with timeInterval() ::',))
+				.catch(error => console.log('Error with timeInterval() ::', error))
 			}, 500)
 		})
 	} catch (error) {
@@ -325,11 +325,16 @@ function raceProgress(positions) {
 	let count = 1
 
 	/*
-	const player = positions.find(p => p.driver_name.includes(playerName));
-	const completetion = player.segment/201; 
-	const completionPercentage = completetion*100
-	*/
-
+	const raceTracks = positions.map(player => {
+		const completion = player.segment/201; 
+		const completionPercentage = completion*100;
+		return `
+			<div>
+				<div style="bottom:${completionPercentage}%"></div>
+			</div>
+		`
+	});
+*/
 
 
 	const results = positions.map(p => {
@@ -421,10 +426,8 @@ async function createRace(player_id, track_id) {
 
 function getRace(id) {
 	// GET request to `${SERVER}/api/races/${id}`
-	return fetch(`${SERVER}/api/races/${id}`, {
-		method: 'GET',
-		...defaultFetchOpts(),
-	})
+	return fetch(`${SERVER}/api/races/${id}`)
+	.then(response => response.json())
 	.catch(error => console.log(error))
 }
 
