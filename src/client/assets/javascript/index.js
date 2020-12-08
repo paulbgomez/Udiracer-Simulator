@@ -80,7 +80,6 @@ async function delay(ms) {
 async function handleCreateRace() {
 	// render starting UI
 	try {
-	// TODO - Get player_id and track_id from the store
 	const {
 		track_id,
 		player_id
@@ -90,17 +89,12 @@ async function handleCreateRace() {
 			} else if (!track_id) {
 				alert('Don´t forget to choose a car!')
 			} else {
-			// const race = TODO - invoke the API call to create the race, then save the result
 			const race = await createRace(player_id, track_id);
 			renderAt('#race', renderRaceStartView(race.Track, race.Cars))
-			// TODO - update the store with the race id
 			store.race_id = (race.ID - 1); 
 			// The race has been created, now start the countdown
-			// TODO - call the async function runCountdown
 			await runCountdown();
-			// TODO - call the async function startRace
 			await startRace(store.race_id);
-			// TODO - call the async function runRace
 			await runRace(store.race_id);
 			}
 	} catch (error) {
@@ -111,17 +105,12 @@ async function handleCreateRace() {
 
 async function runRace(raceID) {
 	try {
-		return new Promise(resolve => {
-			// TODO - use Javascript's built in setInterval method to get race info every 500ms
-			const timeInterval = setInterval(() => {
+		return new Promise(resolve => {			const timeInterval = setInterval(() => {
 				getRace(raceID)
 				.then((res) => {
-				//TODO - if the race info status property is "in-progress", update the leaderboard by calling:
 					if (res.status === "in-progress") {
 						renderAt('#leaderBoard', raceProgress(res.positions))
 						//render raceInProgress
-
-						//TODO - if the race info status property is "finished", run the following:
 					} else if (res.status === "finished") {
 						clearInterval(timeInterval) // to stop the interval from repeating
 						renderAt('#race', resultsView(res.positions)) // to render the results view
@@ -139,14 +128,10 @@ async function runRace(raceID) {
 
 async function runCountdown() {
 	try {
-		// wait for the DOM to load
 		await delay(1000)
 		let timer = 3
-
 		return new Promise(resolve => {
-			// TODO - use Javascript's built in setInterval method to count down once per second
 			let countdown = setInterval(() => {
-				// run this DOM manipulation to decrement the countdown for the user
 				document.getElementById('big-numbers').innerHTML = --timer;
 				if (timer === 0) {
 					clearInterval(countdown);
@@ -170,7 +155,6 @@ function handleSelectPodRacer(target) {
 	// add class selected to current target
 	target.classList.add('selected')
 
-	// TODO - save the selected racer to the store
 	store.player_id = parseInt(target.id);
 }
 
@@ -185,13 +169,11 @@ function handleSelectTrack(target) {
 	// add class selected to current target
 	target.classList.add('selected')
 
-	// TODO - save the selected track id to the store
 	store.track_id = parseInt(target.id);
 }
 
 async function handleAccelerate() {
 	try {
-		// TODO - Invoke the API call to accelerate
 		accelerate(store.race_id);
 	} catch (error) {
 		console.log('Error in handleAccelerate() ::', error);
@@ -215,7 +197,6 @@ const customTrackName = {
 	"Track 5": "Compact Pussycat",
 	"Track 6": "Mean Machine"
 }
-// Provided code - do not remove
 
 function renderRacerCars(racers) {
 	if (!racers.length) {
@@ -320,6 +301,22 @@ function raceProgress(positions) {
 	//there are 201 segments in the race and I have kept track length as 25vh
 	const completion = r.segment/201; 
 	const completePercentage = completion * 100;
+	if (r.id === store.player_id){
+		return `
+		<div class="col-sm d-flex justify-content-around">
+		<div class="racetrack">
+		  <div class="race-car">
+			  <img class="progressImage" src="../assets/images/car${r.id}.gif"/>
+		  </div>
+		  <div class="racer-name">
+			<div>${customRacerName[r.driver_name]}</div>
+			<div class="progress">
+				<div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="${completePercentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${completePercentage}%"}>${Math.round(completePercentage)}%</div>		</div>
+			  </div>
+		</div>
+		</div>
+		`
+	}
 	return `
 	<div class="col-sm d-flex justify-content-around">
 	<div class="racetrack">
@@ -454,8 +451,6 @@ function startRace(id) {
 
 function accelerate(id) {
 	// POST request to `${SERVER}/api/races/${id}/accelerate`
-	// options parameter provided as defaultFetchOpts
-	// no body or datatype needed for this request
 	return fetch(`${SERVER}/api/races/${id}/accelerate`,{
 		method: 'POST',
 		...defaultFetchOpts()
